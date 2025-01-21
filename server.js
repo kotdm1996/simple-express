@@ -9,3 +9,9 @@ app.get("/health", (req, res, next) => {
   res.status(200).send("Hello!");
 });
 
+app.get("/dktest", (req, res, next) => {
+  res.status(200).send("DKTEST WE LOVE HOCKEY!");
+});
+
+
+
