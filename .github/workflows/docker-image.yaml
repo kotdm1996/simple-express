@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!        
+      - uses: actions/checkout@v4
+      - name: Build and push Docker images                
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and push
+        uses: docker/build-push-action@v6.11.0
+        with:
+          context: .
+          push: true
+          tags: dimahockey/simple-express:latest,dimahockey/simple-express:${{github.run_number}}
+            
+        #run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
